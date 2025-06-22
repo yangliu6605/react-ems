@@ -1,0 +1,23 @@
+.nav {
+    text-align: center;
+}
+
+
+.footer {
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color: rgb(38, 37, 37);
+    text-align: center;
+    color: white;
+    margin-top: 20px;
+}
+
+.container {
+    min-height: 500px;
+}
+
+.row {
+    justify-content: center;
+    margin: 20px auto;
+}
