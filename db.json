@@ -1,10 +1,10 @@
 {
   "employees": [
     {
-      "id": "0",
       "name": "Harper Lewis",
       "phone": "1325987345123",
-      "email": "harper.lewis@workmail.com"
+      "email": "harper.lewis@workmail.com",
+      "id": "0"
     },
     {
       "id": "1",
@@ -65,12 +65,6 @@
       "name": "Piper Sullivan",
       "phone": "1359012345678",
       "email": "piper.sullivan@unitmail.com"
-    },
-    {
-      "id": "11",
-      "name": "Felix Ward",
-      "phone": "1323456789012",
-      "email": "felix.ward@brightlane.org"
     },
     {
       "id": "12",
