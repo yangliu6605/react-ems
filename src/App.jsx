@@ -1,30 +1,24 @@
-import HeaderComponent from "./components/HeaderComponent"
-import ListEmployeeComponent from './components/ListEmployeeComponent'
-import FooterComponent from "./components/FooterComponent"
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import EmployeeComponent from './components/EmployeeComponent'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import "./App.css"
-
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import EmployeeForm from "./components/EmployeeForm";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import Layout from "./Layout";
+import ListEmployee from "./components/ListEmployee";
 
 function App() {
-
   return (
-   <>
-    <BrowserRouter>
-     <HeaderComponent />
-       <Routes>
-        <Route path='/' element = {<ListEmployeeComponent />}></Route>
-        <Route path='/employees' element = {<ListEmployeeComponent />}></Route>
-        <Route path='/add-employee' element = {<EmployeeComponent />}></Route>
-        {/* // http://localhost:3000/edit-employee/1 */}
-        <Route path='/edit-employee/:id' element = { <EmployeeComponent />}></Route>
-       </Routes>
-      <FooterComponent />
-     </BrowserRouter>
-   </>
-  )
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<ListEmployee />}></Route>
+            <Route path="/add-employee" element={<EmployeeForm />}></Route>
+            <Route path="/edit-employee/:id" element={<EmployeeForm />}></Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 
-export default App
+export default App;
