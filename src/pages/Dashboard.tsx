@@ -1,5 +1,15 @@
 import { useState, useEffect } from "react";
-import { Box, Card, CardContent, Typography, Grid, Paper } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  Paper,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import { LineChart } from "@mui/x-charts/LineChart";
 import axios from "axios";
 import Footer from "../components/Footer";
@@ -18,7 +28,8 @@ export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchDashboardData = () => {
+    setLoading(true);
     axios
       .get("/api/dashboard")
       .then((response) => {
@@ -29,6 +40,10 @@ export default function Dashboard() {
         console.error("Failed to fetch dashboard data:", error);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchDashboardData();
   }, []);
 
   if (loading) {
@@ -52,9 +67,16 @@ export default function Dashboard() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Typography variant="h4" gutterBottom sx={{ mb: 3 }}>
-        Dashboard
-      </Typography>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+        <Typography variant="h4" gutterBottom sx={{ mb: 0, flexGrow: 1 }}>
+          Dashboard
+        </Typography>
+        <Tooltip title="Refresh data">
+          <IconButton onClick={fetchDashboardData} color="primary">
+            <RefreshIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
 
       {/* KPI Cards */}
       {/* @ts-ignore */}

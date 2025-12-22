@@ -9,8 +9,15 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
+type Employee = {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+};
+
 const ListEmployee = () => {
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
 
   //分页
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,11 +53,11 @@ const ListEmployee = () => {
     navigator("/employees/new");
   }
 
-  function updateEmployee(id) {
+  function updateEmployee(id: string) {
     navigator(`/employees/${id}/edit`);
   }
 
-  function removeEmployee(id) {
+  function removeEmployee(id: string) {
     console.log(id);
 
     deleteEmployee(id)
