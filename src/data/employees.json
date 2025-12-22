@@ -1,0 +1,122 @@
+[
+  {
+    "id": "EMP-001",
+    "name": "Harper Lewis",
+    "role": "Sales Manager",
+    "phone": "1325987345123",
+    "email": "harper.lewis@musicshop.com",
+    "baseSalary": 12000,
+    "commissionRate": 0.04,
+    "monthlySales": 85000,
+    "salesTarget": 80000,
+    "salaryPaid": 15400
+  },
+  {
+    "id": "EMP-002",
+    "name": "Mason Grant",
+    "role": "Sales Consultant",
+    "phone": "1319876543210",
+    "email": "mason.grant@musicshop.com",
+    "baseSalary": 9000,
+    "commissionRate": 0.03,
+    "monthlySales": 52000,
+    "salesTarget": 50000,
+    "salaryPaid": 10560
+  },
+  {
+    "id": "EMP-003",
+    "name": "Isla Turner",
+    "role": "Sales Consultant",
+    "phone": "1334567890123",
+    "email": "isla.turner@musicshop.com",
+    "baseSalary": 9000,
+    "commissionRate": 0.03,
+    "monthlySales": 48000,
+    "salesTarget": 50000,
+    "salaryPaid": 10440
+  },
+  {
+    "id": "EMP-004",
+    "name": "Nolan Brooks",
+    "role": "Sales Consultant",
+    "phone": "1398765432101",
+    "email": "nolan.brooks@musicshop.com",
+    "baseSalary": 9000,
+    "commissionRate": 0.03,
+    "monthlySales": 38000,
+    "salesTarget": 50000,
+    "salaryPaid": 10140
+  },
+  {
+    "id": "EMP-005",
+    "name": "Aria Mitchell",
+    "role": "Inventory Manager",
+    "phone": "1307654321987",
+    "email": "aria.mitchell@musicshop.com",
+    "baseSalary": 10000,
+    "commissionRate": 0,
+    "monthlySales": 0,
+    "salesTarget": 0,
+    "salaryPaid": 10000
+  },
+  {
+    "id": "EMP-006",
+    "name": "Owen Carter",
+    "role": "Warehouse Staff",
+    "phone": "1312233445566",
+    "email": "owen.carter@musicshop.com",
+    "baseSalary": 7000,
+    "commissionRate": 0,
+    "monthlySales": 0,
+    "salesTarget": 0,
+    "salaryPaid": 7000
+  },
+  {
+    "id": "EMP-007",
+    "name": "Lily Bennett",
+    "role": "Sales Consultant",
+    "phone": "1389900123456",
+    "email": "lily.bennett@musicshop.com",
+    "baseSalary": 9000,
+    "commissionRate": 0.03,
+    "monthlySales": 62000,
+    "salesTarget": 50000,
+    "salaryPaid": 10860
+  },
+  {
+    "id": "EMP-008",
+    "name": "Caleb Foster",
+    "role": "Customer Service",
+    "phone": "1371122334455",
+    "email": "caleb.foster@musicshop.com",
+    "baseSalary": 7500,
+    "commissionRate": 0,
+    "monthlySales": 0,
+    "salesTarget": 0,
+    "salaryPaid": 7500
+  },
+  {
+    "id": "EMP-009",
+    "name": "Stella Hayes",
+    "role": "Sales Consultant",
+    "phone": "1366677889900",
+    "email": "stella.hayes@musicshop.com",
+    "baseSalary": 9000,
+    "commissionRate": 0.03,
+    "monthlySales": 45000,
+    "salesTarget": 50000,
+    "salaryPaid": 10350
+  },
+  {
+    "id": "EMP-010",
+    "name": "Julian Reed",
+    "role": "Warehouse Staff",
+    "phone": "1345566778899",
+    "email": "julian.reed@musicshop.com",
+    "baseSalary": 7000,
+    "commissionRate": 0,
+    "monthlySales": 0,
+    "salesTarget": 0,
+    "salaryPaid": 7000
+  }
+]

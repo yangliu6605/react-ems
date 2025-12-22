@@ -1,0 +1,23 @@
+{
+  "period": "2025-12",
+  "totalSales": 275000,
+  "orders": 62,
+  "avgOrderValue": 4435,
+  "topCategories": [
+    { "category": "Guitar", "value": 120000 },
+    { "category": "Keyboard", "value": 80000 },
+    { "category": "Drums", "value": 45000 },
+    { "category": "Bass", "value": 18000 },
+    { "category": "Microphone", "value": 8000 },
+    { "category": "Amplifier", "value": 4000 }
+  ],
+  "lowStock": ["SKU-3002", "SKU-5001"],
+  "salesTrend": [
+    { "month": "Jul", "sales": 185000 },
+    { "month": "Aug", "sales": 210000 },
+    { "month": "Sep", "sales": 195000 },
+    { "month": "Oct", "sales": 240000 },
+    { "month": "Nov", "sales": 260000 },
+    { "month": "Dec", "sales": 275000 }
+  ]
+}
