@@ -13,6 +13,12 @@
   ],
   "lowStock": ["SKU-3002", "SKU-5001"],
   "salesTrend": [
+    { "month": "Jan", "sales": 165000 },
+    { "month": "Feb", "sales": 158000 },
+    { "month": "Mar", "sales": 172000 },
+    { "month": "Apr", "sales": 168000 },
+    { "month": "May", "sales": 175000 },
+    { "month": "Jun", "sales": 180000 },
     { "month": "Jul", "sales": 185000 },
     { "month": "Aug", "sales": 210000 },
     { "month": "Sep", "sales": 195000 },

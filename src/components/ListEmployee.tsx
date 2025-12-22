@@ -23,7 +23,13 @@ const ListEmployee = () => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    getAllEmployees();
+    listEmployees()
+      .then((response) => {
+        setEmployees(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   function getAllEmployees() {
@@ -37,11 +43,11 @@ const ListEmployee = () => {
   }
 
   function addNewEmployee() {
-    navigator("/add-employee");
+    navigator("/employees/new");
   }
 
   function updateEmployee(id) {
-    navigator(`/edit-employee/${id}`);
+    navigator(`/employees/${id}/edit`);
   }
 
   function removeEmployee(id) {

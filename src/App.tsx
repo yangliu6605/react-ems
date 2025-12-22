@@ -3,7 +3,10 @@ import EmployeeForm from "./components/EmployeeForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Layout from "./Layout";
-import ListEmployee from "./components/ListEmployee";
+import Dashboard from "./pages/Dashboard";
+import Employees from "./pages/Employees";
+import Inventory from "./pages/Inventory";
+import Orders from "./pages/Orders";
 
 function App() {
   return (
@@ -11,9 +14,16 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<ListEmployee />}></Route>
-            <Route path="/add-employee" element={<EmployeeForm />}></Route>
-            <Route path="/edit-employee/:id" element={<EmployeeForm />}></Route>
+            <Route index element={<Dashboard />}></Route>
+            <Route path="/dashboard" element={<Dashboard />}></Route>
+            <Route path="/employees" element={<Employees />}></Route>
+            <Route path="/employees/new" element={<EmployeeForm />}></Route>
+            <Route
+              path="/employees/:id/edit"
+              element={<EmployeeForm />}
+            ></Route>
+            <Route path="/inventory" element={<Inventory />}></Route>
+            <Route path="/orders" element={<Orders />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
