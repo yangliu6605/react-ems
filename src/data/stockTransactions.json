@@ -1,0 +1,44 @@
+[
+  {
+    "id": "TXN-001",
+    "instrumentId": "SKU-3002",
+    "instrumentName": "Yamaha P-125",
+    "type": "out",
+    "quantity": 3,
+    "date": "2025-12-01",
+    "operator": "System",
+    "reason": "Order ORD-2025001",
+    "relatedOrderId": "ORD-2025001"
+  },
+  {
+    "id": "TXN-002",
+    "instrumentId": "SKU-5001",
+    "instrumentName": "Shure SM58",
+    "type": "out",
+    "quantity": 2,
+    "date": "2025-12-14",
+    "operator": "System",
+    "reason": "Order ORD-2025014",
+    "relatedOrderId": "ORD-2025014"
+  },
+  {
+    "id": "TXN-003",
+    "instrumentId": "SKU-1001",
+    "instrumentName": "Fender Stratocaster",
+    "type": "in",
+    "quantity": 10,
+    "date": "2025-12-10",
+    "operator": "System",
+    "reason": "Stock replenishment"
+  },
+  {
+    "id": "TXN-004",
+    "instrumentId": "SKU-2001",
+    "instrumentName": "Yamaha YAS-280",
+    "type": "in",
+    "quantity": 5,
+    "date": "2025-12-12",
+    "operator": "System",
+    "reason": "Stock replenishment"
+  }
+]

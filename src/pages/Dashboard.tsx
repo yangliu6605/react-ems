@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { LineChart } from "@mui/x-charts/LineChart";
-import axios from "axios";
 import Footer from "../components/Footer";
+import { useDashboard } from "../hooks/useData";
 
 type DashboardData = {
   period: string;
@@ -25,28 +25,9 @@ type DashboardData = {
 };
 
 export default function Dashboard() {
-  const [data, setData] = useState<DashboardData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading, refetch } = useDashboard();
 
-  const fetchDashboardData = () => {
-    setLoading(true);
-    axios
-      .get("/api/dashboard")
-      .then((response) => {
-        setData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch dashboard data:", error);
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <Box sx={{ p: 3 }}>
         <Typography>Loading...</Typography>
@@ -72,7 +53,7 @@ export default function Dashboard() {
           Dashboard
         </Typography>
         <Tooltip title="Refresh data">
-          <IconButton onClick={fetchDashboardData} color="primary">
+          <IconButton onClick={() => refetch()} color="primary">
             <RefreshIcon />
           </IconButton>
         </Tooltip>

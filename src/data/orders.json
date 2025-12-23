@@ -2,13 +2,26 @@
   {
     "id": "ORD-2025001",
     "customer": "Liam Chen",
+    "customerPhone": "13800138001",
+    "customerAddress": "123 Main St, San Francisco, CA 94102",
     "date": "2025-12-01",
     "status": "fulfilled",
     "salesRepId": "EMP-001",
+    "salesRepName": "Ethan Brooks",
     "total": 5600,
     "items": [
-      { "instrumentId": "SKU-1001", "quantity": 2, "unitPrice": 1200 },
-      { "instrumentId": "SKU-2001", "quantity": 5, "unitPrice": 650 }
+      {
+        "instrumentId": "SKU-1001",
+        "instrumentName": "Fender Stratocaster",
+        "quantity": 2,
+        "unitPrice": 1200
+      },
+      {
+        "instrumentId": "SKU-2001",
+        "instrumentName": "Yamaha YAS-280",
+        "quantity": 5,
+        "unitPrice": 650
+      }
     ]
   },
   {

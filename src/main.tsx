@@ -1,6 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
+import { queryClient } from "./lib/queryClient";
 
 async function enableMocking() {
   if (process.env.NODE_ENV !== "development") {
@@ -15,7 +17,9 @@ async function enableMocking() {
 enableMocking().then(() => {
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </StrictMode>
   );
 });
