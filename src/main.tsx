@@ -5,9 +5,8 @@ import App from "./App";
 import { queryClient } from "./lib/queryClient";
 
 async function enableMocking() {
-  if (process.env.NODE_ENV !== "development") {
-    return;
-  }
+  const enableMsw = (import.meta.env.VITE_ENABLE_MSW ?? "true") === "true";
+  if (!enableMsw) return;
 
   const { worker } = await import("./mocks/browser");
 
