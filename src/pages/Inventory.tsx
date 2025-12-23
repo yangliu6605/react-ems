@@ -13,16 +13,13 @@ import {
   FormControl,
   InputLabel,
   Select,
-  Grid,
-  IconButton,
-  Chip,
 } from "@mui/material";
-import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
+import InventoryInstrumentsGrid from "../components/InventoryInstrumentsGrid";
+import StockTransactionsGrid from "../components/StockTransactionsGrid";
+import InstrumentFormDialog, {
+  InstrumentFormData,
+} from "../components/InstrumentFormDialog";
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import {
   useInstruments,
   useStockTransactions,
@@ -32,18 +29,6 @@ import {
   useStockIn,
   useStockOut,
 } from "../hooks/useData";
-
-type InstrumentFormData = {
-  id: string;
-  name: string;
-  category: string;
-  brand: string;
-  stock: number;
-  reorderLevel: number;
-  cost: number;
-  price: number;
-  status: string;
-};
 
 export default function Inventory() {
   const { data: instruments = [], isLoading } = useInstruments();
@@ -95,102 +80,9 @@ export default function Inventory() {
     return matchesSearch && matchesStatus;
   });
 
-  const columns: GridColDef[] = [
-    { field: "id", headerName: "SKU", width: 120 },
-    { field: "name", headerName: "Name", width: 200 },
-    { field: "category", headerName: "Category", width: 120 },
-    { field: "brand", headerName: "Brand", width: 120 },
-    {
-      field: "stock",
-      headerName: "Stock",
-      width: 100,
-      renderCell: (params) => (
-        <Chip
-          label={params.value}
-          color={
-            params.row.stock < params.row.reorderLevel ? "warning" : "default"
-          }
-          size="small"
-        />
-      ),
-    },
-    { field: "reorderLevel", headerName: "Reorder Level", width: 120 },
-    {
-      field: "cost",
-      headerName: "Cost",
-      width: 100,
-      valueFormatter: (value) => `$${value}`,
-    },
-    {
-      field: "price",
-      headerName: "Price",
-      width: 100,
-      valueFormatter: (value) => `$${value}`,
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 100,
-      renderCell: (params) => (
-        <Chip
-          label={params.value}
-          color={params.value === "active" ? "success" : "default"}
-          size="small"
-        />
-      ),
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 200,
-      sortable: false,
-      renderCell: (params) => (
-        <Box>
-          <IconButton size="small" onClick={() => handleEdit(params.row)}>
-            <EditIcon fontSize="small" />
-          </IconButton>
-          <IconButton size="small" onClick={() => handleStockIn(params.row.id)}>
-            <ArrowUpwardIcon fontSize="small" color="success" />
-          </IconButton>
-          <IconButton
-            size="small"
-            onClick={() => handleStockOut(params.row.id)}
-          >
-            <ArrowDownwardIcon fontSize="small" color="warning" />
-          </IconButton>
-          <IconButton
-            size="small"
-            onClick={() => handleDeleteClick(params.row.id)}
-            color="error"
-          >
-            <DeleteIcon fontSize="small" />
-          </IconButton>
-        </Box>
-      ),
-    },
-  ];
+  // 表格列定义已抽到 components 中，Inventory 页面只负责提供数据与回调
 
-  const transactionColumns: GridColDef[] = [
-    { field: "date", headerName: "Date", width: 120 },
-    {
-      field: "type",
-      headerName: "Type",
-      width: 100,
-      renderCell: (params) => (
-        <Chip
-          label={params.value === "in" ? "In" : "Out"}
-          color={params.value === "in" ? "success" : "warning"}
-          size="small"
-        />
-      ),
-    },
-    { field: "instrumentId", headerName: "SKU", width: 120 },
-    { field: "instrumentName", headerName: "Instrument", width: 200 },
-    { field: "quantity", headerName: "Quantity", width: 100 },
-    { field: "operator", headerName: "Operator", width: 100 },
-    { field: "reason", headerName: "Reason", width: 200 },
-  ];
-
+  // 打开新增弹窗，预填默认数据并标记为新增模式
   const handleAdd = () => {
     setEditMode(false);
     setFormData({
@@ -207,12 +99,14 @@ export default function Inventory() {
     setFormOpen(true);
   };
 
+  // 进入编辑模式，载入选中乐器的数据
   const handleEdit = (instrument: any) => {
     setEditMode(true);
     setFormData(instrument);
     setFormOpen(true);
   };
 
+  // 提交新增/编辑表单，根据模式调用不同的接口
   const handleFormSubmit = () => {
     if (editMode) {
       updateInstrument.mutate({ id: formData.id, updates: formData });
@@ -222,6 +116,7 @@ export default function Inventory() {
     setFormOpen(false);
   };
 
+  // 打开入库对话框，记录当前操作的乐器
   const handleStockIn = (id: string) => {
     setSelectedInstrument(id);
     setStockMode("in");
@@ -229,6 +124,7 @@ export default function Inventory() {
     setStockDialogOpen(true);
   };
 
+  // 打开出库对话框，记录当前操作的乐器
   const handleStockOut = (id: string) => {
     setSelectedInstrument(id);
     setStockMode("out");
@@ -236,6 +132,7 @@ export default function Inventory() {
     setStockDialogOpen(true);
   };
 
+  // 在入库/出库对话框中提交数量与原因
   const handleStockSubmit = () => {
     if (!selectedInstrument) return;
 
@@ -249,11 +146,13 @@ export default function Inventory() {
     setStockDialogOpen(false);
   };
 
+  // 打开删除确认框，保存待删除乐器 ID
   const handleDeleteClick = (id: string) => {
     setSelectedInstrument(id);
     setDeleteDialogOpen(true);
   };
 
+  // 确认删除乐器，调用删除接口
   const handleDeleteConfirm = () => {
     if (selectedInstrument) {
       deleteInstrument.mutate(selectedInstrument);
@@ -271,6 +170,7 @@ export default function Inventory() {
 
   return (
     <Box>
+      {/* 页面标题区：页面名称 + 新增按钮（打开新增商品弹窗） */}
       <Box
         sx={{
           display: "flex",
@@ -291,6 +191,7 @@ export default function Inventory() {
         </Button>
       </Box>
 
+      {/* 低库存提示区：当库存低于 reorderLevel 时显示提醒 */}
       {lowStockItems.length > 0 && (
         <Alert severity="warning" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" fontWeight="bold">
@@ -299,6 +200,7 @@ export default function Inventory() {
         </Alert>
       )}
 
+      {/* 工具栏区：搜索（SKU/名称） + 状态筛选（active/inactive） */}
       <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
         <TextField
           label="Search by SKU or Name"
@@ -322,158 +224,40 @@ export default function Inventory() {
         </FormControl>
       </Box>
 
-      <Box sx={{ height: 500, mb: 4 }}>
-        <DataGrid
-          rows={filteredInstruments}
-          columns={columns}
-          pageSizeOptions={[10, 25, 50]}
-          initialState={{
-            pagination: { paginationModel: { pageSize: 10 } },
-          }}
-        />
+      {/* 库存主表区：展示商品列表（可编辑/入库/出库/删除），横向溢出时在表格区域滚动 */}
+      <Box sx={{ height: 500, mb: 4, overflowX: "auto" }}>
+        <Box sx={{ minWidth: 950, height: "100%" }}>
+          <InventoryInstrumentsGrid
+            rows={filteredInstruments}
+            onEdit={handleEdit}
+            onStockIn={handleStockIn}
+            onStockOut={handleStockOut}
+            onDelete={handleDeleteClick}
+          />
+        </Box>
       </Box>
 
+      {/* 库存交易历史区：展示每次入库/出库记录，默认按日期倒序 */}
       <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
         Stock Transaction History
       </Typography>
-      <Box sx={{ height: 400 }}>
-        <DataGrid
-          rows={transactions}
-          columns={transactionColumns}
-          pageSizeOptions={[10, 25, 50]}
-          initialState={{
-            pagination: { paginationModel: { pageSize: 10 } },
-            sorting: { sortModel: [{ field: "date", sort: "desc" }] },
-          }}
-        />
+      <Box sx={{ height: 400, overflowX: "auto" }}>
+        <Box sx={{ minWidth: 850, height: "100%" }}>
+          <StockTransactionsGrid rows={transactions} />
+        </Box>
       </Box>
 
-      {/* Add/Edit Dialog */}
-      <Dialog
+      {/* 新增/编辑弹窗：维护商品基础信息（SKU/名称/品牌/库存/价格/状态） */}
+      <InstrumentFormDialog
         open={formOpen}
+        editMode={editMode}
+        formData={formData}
+        onChange={setFormData}
         onClose={() => setFormOpen(false)}
-        maxWidth="md"
-        fullWidth
-      >
-        <DialogTitle>
-          {editMode ? "Edit Instrument" : "Add New Instrument"}
-        </DialogTitle>
-        <DialogContent>
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="SKU"
-                fullWidth
-                value={formData.id}
-                onChange={(e) =>
-                  setFormData({ ...formData, id: e.target.value })
-                }
-                disabled={editMode}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Name"
-                fullWidth
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Category"
-                fullWidth
-                value={formData.category}
-                onChange={(e) =>
-                  setFormData({ ...formData, category: e.target.value })
-                }
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Brand"
-                fullWidth
-                value={formData.brand}
-                onChange={(e) =>
-                  setFormData({ ...formData, brand: e.target.value })
-                }
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Stock"
-                type="number"
-                fullWidth
-                value={formData.stock}
-                onChange={(e) =>
-                  setFormData({ ...formData, stock: Number(e.target.value) })
-                }
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Reorder Level"
-                type="number"
-                fullWidth
-                value={formData.reorderLevel}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    reorderLevel: Number(e.target.value),
-                  })
-                }
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Cost"
-                type="number"
-                fullWidth
-                value={formData.cost}
-                onChange={(e) =>
-                  setFormData({ ...formData, cost: Number(e.target.value) })
-                }
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Price"
-                type="number"
-                fullWidth
-                value={formData.price}
-                onChange={(e) =>
-                  setFormData({ ...formData, price: Number(e.target.value) })
-                }
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth>
-                <InputLabel>Status</InputLabel>
-                <Select
-                  value={formData.status}
-                  label="Status"
-                  onChange={(e) =>
-                    setFormData({ ...formData, status: e.target.value })
-                  }
-                >
-                  <MenuItem value="active">Active</MenuItem>
-                  <MenuItem value="inactive">Inactive</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setFormOpen(false)}>Cancel</Button>
-          <Button onClick={handleFormSubmit} variant="contained">
-            {editMode ? "Update" : "Create"}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onSubmit={handleFormSubmit}
+      />
 
-      {/* Stock In/Out Dialog */}
+      {/* 入库/出库弹窗：录入数量与原因，提交后生成交易记录并更新库存 */}
       <Dialog open={stockDialogOpen} onClose={() => setStockDialogOpen(false)}>
         <DialogTitle>Stock {stockMode === "in" ? "In" : "Out"}</DialogTitle>
         <DialogContent>
@@ -511,7 +295,7 @@ export default function Inventory() {
         </DialogActions>
       </Dialog>
 
-      {/* Delete Confirmation Dialog */}
+      {/* 删除确认弹窗：确认后删除商品（需要二次确认，防止误删） */}
       <Dialog
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}

@@ -6,7 +6,7 @@ import Layout from "./Layout";
 import Dashboard from "./pages/Dashboard";
 import Employees from "./pages/Employees";
 import Inventory from "./pages/Inventory";
-import Orders from "./pages/OrdersNew";
+import Orders from "./pages/Orders";
 
 function App() {
   return (
