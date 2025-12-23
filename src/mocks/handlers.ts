@@ -150,6 +150,38 @@ export const handlers = [
     return HttpResponse.json({ success: true });
   }),
 
+  // 获取单个员工（用于编辑时回填表单）
+  http.get("/api/employees/:id", ({ params }) => {
+    const { id } = params;
+    const employee = employees.find((e) => e.id === id);
+
+    if (!employee) {
+      return HttpResponse.json(
+        { error: "Employee not found" },
+        { status: 404 }
+      );
+    }
+
+    return HttpResponse.json(employee);
+  }),
+
+  // 更新员工信息
+  http.put("/api/employees/:id", async ({ request, params }) => {
+    const { id } = params;
+    const updates = (await request.json()) as any;
+
+    const index = employees.findIndex((e) => e.id === id);
+    if (index === -1) {
+      return HttpResponse.json(
+        { error: "Employee not found" },
+        { status: 404 }
+      );
+    }
+
+    employees[index] = { ...employees[index], ...updates };
+    return HttpResponse.json(employees[index]);
+  }),
+
   // Instruments endpoints
   http.get("/api/instruments", () => {
     return HttpResponse.json(instruments);

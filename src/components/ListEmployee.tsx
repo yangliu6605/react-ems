@@ -2,12 +2,16 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { listEmployees, deleteEmployee } from "../services/service";
 import Pagination from "@mui/material/Pagination";
-import { IconButton, Box } from "@mui/material";
+import { IconButton, Box, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
-import Typography from "@mui/material/Typography";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
 
 type Employee = {
   id: string;
@@ -26,6 +30,13 @@ const ListEmployee = () => {
 
   const start = (currentPage - 1) * pageSize;
   const currentEmployees = employees.slice(start, start + pageSize);
+
+  // 删除确认对话框状态
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [employeeToDelete, setEmployeeToDelete] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
 
   const navigator = useNavigate();
 
@@ -57,29 +68,41 @@ const ListEmployee = () => {
     navigator(`/employees/${id}/edit`);
   }
 
-  function removeEmployee(id: string) {
-    console.log(id);
+  // 打开删除确认对话框
+  function openDeleteDialog(id: string, name: string) {
+    setEmployeeToDelete({ id, name });
+    setDeleteDialogOpen(true);
+  }
 
-    deleteEmployee(id)
+  // 关闭对话框
+  function closeDeleteDialog() {
+    setDeleteDialogOpen(false);
+    setEmployeeToDelete(null);
+  }
+
+  // 确认删除
+  function confirmDelete() {
+    if (!employeeToDelete) return;
+
+    deleteEmployee(employeeToDelete.id)
       .then(() => {
         getAllEmployees();
+        closeDeleteDialog();
       })
       .catch((error) => {
         console.error("删除员工失败:", error);
+        closeDeleteDialog();
       });
   }
 
   return (
-    <Box sx={{ p: 2, marginX: "auto", maxWidth: "800px" }}>
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/">
-          Home
-        </Link>
-        <Typography sx={{ color: "text.primary" }}>Employees</Typography>
-      </Breadcrumbs>
-      <button className="btn btn-primary mb-2" onClick={addNewEmployee}>
-        Add Employee
-      </button>
+    <Box sx={{ p: 2, marginX: "auto", maxWidth: "950px" }}>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>
+        <Button variant="contained" onClick={addNewEmployee}>
+          Add Employee
+        </Button>
+      </Box>
+
       {/* 列表 */}
       <table className="table table-striped table-bordered">
         <thead>
@@ -107,7 +130,7 @@ const ListEmployee = () => {
                 </IconButton>
                 <IconButton
                   aria-label="delete"
-                  onClick={() => removeEmployee(employee.id)}
+                  onClick={() => openDeleteDialog(employee.id, employee.name)}
                 >
                   <DeleteIcon />
                 </IconButton>
@@ -124,6 +147,29 @@ const ListEmployee = () => {
         color="primary"
         sx={{ mt: 2, display: "flex", justifyContent: "center" }}
       />
+      {/* 删除确认对话框 */}
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={closeDeleteDialog}
+        aria-labelledby="delete-dialog-title"
+      >
+        <DialogTitle id="delete-dialog-title">Delete Employee</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete employee{" "}
+            <strong>{employeeToDelete?.name}</strong>? This action cannot be
+            undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDeleteDialog} color="inherit">
+            Cancel
+          </Button>
+          <Button onClick={confirmDelete} color="error" variant="contained">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
