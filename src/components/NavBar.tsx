@@ -43,7 +43,7 @@ const NavBar = ({ onMenuClick }: NavBarProps) => {
           sx={{ flexGrow: 1, cursor: "pointer" }}
           onClick={backToList}
         >
-          Employee Management System
+          ERP System
         </Typography>
       </Toolbar>
     </AppBar>
