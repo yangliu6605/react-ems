@@ -1,6 +1,6 @@
-# EMS React – Inventory & Order Management Suite
+# ERP React – Inventory & Order Management System
 
-A full-featured inventory, order, and workforce management dashboard built with **React 19**, **Vite**, **Material UI**, and **TanStack Query**. The app is optimized for recruiters and hiring managers to evaluate modern React architecture skills, including complex DataGrid usage, mocked APIs with MSW, and Netlify deployment.
+A full-featured inventory, order, and workforce management dashboard built with **React 19**, **Vite**, **MaterialUI**, and **TanStack Query**.
 
 ![Product preview](./public/screenshots/dashboard.png) <!-- Replace with a real screenshot -->
 
@@ -21,7 +21,7 @@ A full-featured inventory, order, and workforce management dashboard built with 
 
 ## Overview
 
-This project simulates an **Equipment Management System (EMS)** for a music company. It showcases:
+This project is an **ERP System** for a small music company. It showcases:
 
 - Dashboard metrics that stay in sync with inventory and order changes via React Query cache invalidation.
 - CRUD flows for inventory, orders, and employees backed by MSW (Mock Service Worker).
@@ -73,7 +73,7 @@ Use this repository to demonstrate modern frontend engineering practices, rapid 
 | State/Data  | TanStack React Query 5                                |
 | Mocking     | MSW 2                                                 |
 | HTTP Client | Axios                                                 |
-| Styling     | MUI System, Bootstrap (legacy styling)                |
+| Styling     | MUI System, Bootstrap                                 |
 | Deployment  | Netlify                                               |
 
 ---
