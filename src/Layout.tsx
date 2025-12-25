@@ -12,14 +12,14 @@ export default function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [auth, setAuth] = useState(false);
 
-  const handleDrawerOpen = () => setMobileOpen(true);
+  const handleDrawerToggle = () => setMobileOpen((prev) => !prev);
   const handleDrawerClose = () => setMobileOpen(false);
   const handleLogin = () => setAuth(true);
   const handleLogout = () => setAuth(false);
 
   return (
     <>
-      <NavBar onMenuClick={handleDrawerOpen} />
+      <NavBar onMenuClick={handleDrawerToggle} />
       <Box sx={{ display: "flex" }}>
         <Sidebar
           variant={isDesktop ? "permanent" : "temporary"}
